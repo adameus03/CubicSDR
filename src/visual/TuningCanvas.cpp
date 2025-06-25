@@ -196,11 +196,13 @@ void TuningCanvas::StepTuner(ActiveState state, TuningDirection tuningDir, int d
 
         if (wxGetApp().getSampleRate() / 2 < diff) {
             wxGetApp().setFrequency(demod_freq);
+            printf("HEY 1: [demod_freq = %lld]\n");
         }
 
         activeDemod->setTracking(true);
         activeDemod->setFollow(true);
         activeDemod->setFrequency(demod_freq);
+        printf("HEY 2: [demod_freq = %lld]\n");
         if (activeDemod->isDeltaLock()) {
             activeDemod->setDeltaLockOfs(activeDemod->getFrequency() - wxGetApp().getFrequency());
         }
@@ -246,6 +248,7 @@ void TuningCanvas::StepTuner(ActiveState state, TuningDirection tuningDir, int d
         }
 
         wxGetApp().setFrequency(ctr);
+        printf("HEY 3: [demod_freq = %lld]\n");
     }
 
     if (state == TUNING_HOVER_PPM) {
@@ -412,12 +415,15 @@ void TuningCanvas::OnMouseRightReleased(wxMouseEvent& event) {
     } else if (hoverState == TUNING_HOVER_FREQ) {
         if (hoverIndex == 1) {
             wxGetApp().setFrequencySnap(1);
+            printf("HEY 4: [snap = 1]\n");
         } else if (hoverIndex > 1 && hoverIndex < 8) {
             int exp = pow(10, hoverIndex-1);
             if (wxGetApp().getFrequencySnap() == exp) {
                 wxGetApp().setFrequencySnap(1);
+                printf("HEY 5: [snap = 1]\n");
             } else {
                 wxGetApp().setFrequencySnap(exp);
+                printf("HEY 6: [snap = %d]\n", exp);
             }
         }
     }
